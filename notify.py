@@ -4,7 +4,6 @@ from bs4 import BeautifulSoup
 URL = "https://www.kgrowth.or.kr/notice.asp?str_type=1&tab=1"
 BOT_TOKEN = os.environ["BOT_TOKEN"]
 CHAT_ID = os.environ["CHAT_ID"]
-SEEN_FILE = "seen_idx.txt"
 
 def get_latest_posts():
     res = requests.get(URL)
@@ -26,21 +25,11 @@ def send_telegram(msg):
     )
 
 def main():
-    try:
-        with open(SEEN_FILE) as f:
-            seen = set(f.read().split())
-    except FileNotFoundError:
-        seen = set()
-
     posts = get_latest_posts()
-    new_posts = [p for p in posts if p[0] not in seen]
+    target_posts = posts[2:5]   # 3번째~5번째 글만
 
-    for idx, title, link in new_posts:
+    for idx, title, link in target_posts:
         send_telegram(f"[출자공고] {title}\n{link}")
-        seen.add(idx)
-
-    with open(SEEN_FILE, "w") as f:
-        f.write("\n".join(seen))
 
 if __name__ == "__main__":
     main()
