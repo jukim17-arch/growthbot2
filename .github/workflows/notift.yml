@@ -1,7 +1,7 @@
 name: Kgrowth Notice Check
 on:
   schedule:
-    - cron: '0,30 * * * *'   # 30분마다
+    - cron: '0,30 * * * *'
   workflow_dispatch:
 
 jobs:
@@ -17,10 +17,3 @@ jobs:
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           CHAT_ID: ${{ secrets.CHAT_ID }}
-      - name: Commit seen file
-        run: |
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
-          git add seen_idx.txt
-          git commit -m "update seen" || echo "no changes"
-          git push
