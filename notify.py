@@ -26,7 +26,7 @@ def send_telegram(msg):
 
 def main():
     posts = get_latest_posts()
-    target_posts = posts[2:5]   # 3번째~5번째 글만
+    target_posts = posts[2:4]   # 3번째~4번째 글만
 
     for idx, title, link in target_posts:
         send_telegram(f"[출자공고] {title}\n{link}")
